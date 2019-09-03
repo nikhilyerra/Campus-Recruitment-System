@@ -1,0 +1,110 @@
+<%@include file="oheader.jsp"%>
+<%@page import="java.sql.*,java.util.*,java.text.*"%>
+<%@page import="databaseconnection.*"%>
+<html>
+<body>
+<br><br><br>
+<div>
+<form method="post" action="">
+	
+
+<table>
+<tr>SSC<input type="text"  maxlength="2" name="ssc" pattern="[0-9]+">INTER<input type="text " pattern="[0-9]+"name="inter" maxlength="2"  >GRADUATION<input type="text" maxlength="2" name="grad" pattern="[0-9]+"><input type="submit" value="search"></tr>
+</table>
+</form>
+
+
+	<table align="center" width="900" cellpadding="5">
+<tr align="center">
+<th align="center"><h3><font color="orange">Name</th>
+<th align="center"><h3><font color="orange">SSC</h3></th>
+<th align="center"><h3><font color="orange">Inter</h3></th>
+<th align="center"><h3><font color="orange">Graduate</h3></th>
+<th align="center"><h3><font color="orange">PostGraduate</h3></th>
+<th align="center"><h3><font color="orange">Achievements</h3></th>
+
+<th align="center"><h3><font color="orange">Selected</h3></th>
+</tr>	
+
+
+ <%
+				  if(request.getParameter("y")!=null)
+				  {
+					  out.println("<script>alert('select Sucessfully and send Email')</script>");
+				  }
+
+				   if(request.getParameter("yv")!=null)
+				  {
+					  out.println("<script>alert('already selected')</script>");
+				  }
+
+				  if(request.getParameter("abc")!=null)
+				  {
+					  out.println("<script>alert('student Cannot apply For This Post')</script>");
+				  }
+%>
+
+<br>
+
+<%
+
+
+
+try
+{
+
+	
+ResultSet rs=null;
+
+Connection con = databasecon.getconnection();
+
+	Statement st=con.createStatement();
+rs=st.executeQuery(" select * from sdetails ");
+
+while(rs.next())
+	{
+
+%>
+
+<tr align="center">
+<td align="center"><p style="(255,0,255);"><font size="4"><%=rs.getString(2)%></font></p></td>
+<td align="center"><p style="(255,0,255);"><font size="4"><%=rs.getString(4)%></font></p></td>
+<td align="center"><p style="(255,0,255);"><font size="4"><%=rs.getString(5)%></font></p></td>
+<td align="center"><p style="(255,0,255);"><font size="4"><%=rs.getString(6)%></font></p></td>
+<td align="center"><p style="(255,0,255);"><font size="4"><%=rs.getString(7)%></font></p></td>
+<td align="center"><p style="(255,0,255);"><font size="4"><%=rs.getString(8)%></font></p></td>
+
+
+
+<td align="center"><p style="(255,0,255);"><font size="4"><a href="cstuview.jsp?aid=<%=rs.getString(1)%>&&semail=<%=rs.getString(3)%>">select</a></font></p></td>
+
+
+</tr>
+
+
+<%}%>
+
+
+
+
+
+</table>
+</form>
+
+<%
+
+}
+
+catch(Exception e1)
+{
+out.println(e1.getMessage());
+}
+
+
+%>
+<div>
+</body>
+</html>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<%@ include file="footer.jsp"%>
